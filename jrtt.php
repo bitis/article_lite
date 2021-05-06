@@ -6,11 +6,11 @@
 // 其他设备根据实际屏幕修改坐标
 
 function start_app() {
-    exec("adb shell am start -n com.ss.android.article.lite/com.ss.android.article.lite.activity.SplashActivity");
+    exec("am start -n com.ss.android.article.lite/com.ss.android.article.lite.activity.SplashActivity");
 }
 
 function stop_app() {
-    exec("adb shell am force-stop com.ss.android.article.lite");
+    exec("am force-stop com.ss.android.article.lite");
 }
 
 function swipe_up() {
@@ -26,13 +26,13 @@ function swipe_down() {
 }
 
 function swipe($a, $b) {
-    $command = "adb shell input swipe $a[0] $a[1] $b[0] $b[1] ". random_int(100, 300);
+    $command = "input swipe $a[0] $a[1] $b[0] $b[1] ". random_int(100, 300);
     exec($command);
     wlog($command);
 }
 
 function tap($x, $y) {
-    exec("adb shell input tap $x $y");
+    exec("input tap $x $y");
     wlog("tap $x $y");
 }
 
@@ -47,9 +47,7 @@ function rewards() {
 
     tap(random_int(300,1200),random_int(1870, 2070));
     sleep(20);
-    
     wlog("rewards");
-
     back();
 }
 
@@ -57,7 +55,7 @@ function rewards() {
  * 返回
  */
 function back() {
-    exec("adb shell input keyevent 4");
+    exec("input keyevent 4");
 }
 
 /**
