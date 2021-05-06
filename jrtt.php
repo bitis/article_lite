@@ -47,6 +47,8 @@ function rewards() {
 
     tap(random_int(300,1200),random_int(1870, 2070));
     sleep(20);
+    
+    wlog("rewards");
 
     back();
 }
@@ -119,7 +121,7 @@ while(1) {
     if (time() - $rewards_time > (60*10)) {
         rewards();
 
-        $rewards_time += time() + 60*10;
+        $rewards_time = time() + 60*10;
 
         go_nav_bar(0);
 
