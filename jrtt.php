@@ -41,15 +41,14 @@ function tap($x, $y) {
  */
 function rewards() {
     go_nav_bar(2);
-    
+    sleep(3);
     tap(random_int(1100, 1350), random_int(2250, 2800));
-    sleep(1);
+    sleep(2);
 
     tap(random_int(300,1200),random_int(1870, 2070));
     sleep(20);
-    
     wlog("rewards");
-
+    back();
     back();
 }
 
@@ -68,23 +67,23 @@ function go_nav_bar($index = 0) {
     $nav_bar = [
         [
             [50,288],
-            [2900, 3090]
+            [2950, 3090]
         ],
         [
             [300,576],
-            [2900, 3090]
+            [2950, 3090]
         ],
         [
             [600, 850],
-            [2900, 3090]
+            [2950, 3090]
         ],
         [
             [900,1152],
-            [2900, 3090]
+            [2950, 3090]
         ],
         [
             [1200,1400],
-            [2900, 3090]
+            [2950, 3090]
         ],
         
     ];
@@ -104,6 +103,18 @@ function fake_read() {
     }
 }
 
+function dy_rewards() {
+    return;
+    exec("adb shell am start -n com.ss.android.ugc.aweme.lite/com.ss.android.ugc.aweme.splash.SplashActivity");
+    sleep(5);
+    tap(700,2900);
+    sleep(3);
+    tap(1300, 2800);
+    sleep(2);
+    exec("adb shell am force-stop com.ss.android.ugc.aweme.lite");
+    wlog("dy_rewards");
+}
+
 function wlog($log) {
     echo date("h:i:s") . "\t" .  $log . "\n";
 }
@@ -112,20 +123,28 @@ function wlog($log) {
 
 // tap(random_int(300,1200),random_int(1870, 2070));
 
-stop_app();
 start_app();
 
 $rewards_time = time();
+$dy_rewards_time = time();
 
 while(1) {
-    if (time() - $rewards_time > (60*10)) {
+    if ((time() - $rewards_time) >= 0) {
+        sleep(2);
         rewards();
 
         $rewards_time = time() + 60*10;
 
         go_nav_bar(0);
+        sleep(1);
+        go_nav_bar(0);
 
         swipe_down();
+    }
+
+    if ((time() - $dy_rewards_time) >= 0) {
+        dy_rewards();
+        $dy_rewards_time = time() + 1200;
     }
 
     fake_read();
